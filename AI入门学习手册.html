@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 入门手册 · 零基础版</title>
+<style>
+  :root{
+    --bg:#F7F7F5; --card:#FFFFFF; --line:#E3E1DA; --line-strong:#C9C6BC;
+    --ink:#23231F; --ink-2:#5F5E5A; --ink-3:#888780;
+    --blue:#185FA5; --blue-bg:#E6F1FB; --blue-deep:#042C53;
+    --teal:#0F6E56; --teal-bg:#E1F5EE;
+    --amber:#854F0B; --amber-bg:#FAEEDA;
+    --red:#A32D2D; --red-bg:#FCEBEB;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.8;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:56px 28px 96px}
+  .kicker{font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin:0 0 8px}
+  h1{font-size:31px; line-height:1.3; margin:0 0 14px; font-weight:700; letter-spacing:-.01em}
+  .lead{font-size:16px; color:var(--ink-2); margin:0 0 8px}
+  h2{
+    font-size:21px; font-weight:600; margin:56px 0 18px; padding-left:14px;
+    border-left:4px solid var(--blue); line-height:1.4;
+  }
+  h3{font-size:16.5px; font-weight:600; margin:30px 0 10px}
+  h4{font-size:15px; font-weight:600; margin:20px 0 6px; color:var(--ink)}
+  p{margin:0 0 12px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:5px 0}
+  strong{font-weight:600}
+  code{
+    font-family:ui-monospace,"SFMono-Regular",Consolas,monospace; font-size:13.5px;
+    background:#EFEDE7; padding:1px 6px; border-radius:5px; color:#3C3489;
+  }
+  .story{
+    background:var(--blue-bg); border:1px solid #C3DCF5; border-radius:14px;
+    padding:20px 24px; margin:22px 0 30px;
+  }
+  .story p:last-child{margin-bottom:0}
+  .cards{display:grid; grid-template-columns:1fr; gap:14px; margin:20px 0 8px}
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:18px 22px;
+  }
+  .card .head{display:flex; align-items:baseline; gap:10px; margin-bottom:4px; flex-wrap:wrap}
+  .card .name{font-size:17px; font-weight:600}
+  .card .full{font-size:13px; color:var(--ink-3)}
+  .tag{
+    font-size:12px; padding:1px 9px; border-radius:999px; font-weight:500;
+    background:var(--teal-bg); color:var(--teal);
+  }
+  .tag.b{background:var(--blue-bg); color:var(--blue)}
+  .card .meta{font-size:14px; color:var(--ink-2); margin:6px 0 0}
+  .card .meta b{color:var(--ink)}
+  .card p:last-child{margin-bottom:0}
+  table{
+    width:100%; border-collapse:collapse; margin:18px 0 24px; font-size:14px;
+    background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+  }
+  th,td{padding:11px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+  th{background:#F1EFE8; font-weight:600; font-size:13.5px; white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .callout{
+    border-radius:12px; padding:16px 20px; margin:20px 0;
+    border:1px solid var(--line); background:var(--card);
+  }
+  .callout.warn{background:var(--amber-bg); border-color:#EBD3A6}
+  .callout.danger{background:var(--red-bg); border-color:#EFC2C2}
+  .callout.ok{background:var(--teal-bg); border-color:#B7E3D2}
+  .callout .t{font-weight:600; margin:0 0 6px; font-size:14.5px}
+  .callout ul{margin-bottom:0}
+  .kv{display:grid; grid-template-columns:1fr; gap:0; margin:18px 0 24px;
+      background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden}
+  .kv .row{display:grid; grid-template-columns:170px 1fr; gap:16px; padding:13px 20px; border-bottom:1px solid var(--line)}
+  .kv .row:last-child{border-bottom:none}
+  .kv .k{font-weight:600; font-size:14px; color:var(--blue-deep)}
+  .kv .v{font-size:14px; color:var(--ink-2)}
+  .steps{counter-reset:s; margin:20px 0; padding:0; list-style:none}
+  .steps li{
+    counter-increment:s; position:relative; padding:0 0 18px 46px; margin:0;
+    border-left:2px solid var(--line); margin-left:14px;
+  }
+  .steps li:last-child{border-left-color:transparent; padding-bottom:0}
+  .steps li::before{
+    content:counter(s); position:absolute; left:-15px; top:2px;
+    width:28px; height:28px; border-radius:50%;
+    background:var(--blue-bg); border:1px solid #9FC5E8; color:var(--blue-deep);
+    font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center;
+  }
+  .steps .st{font-weight:600; font-size:15px; display:block; margin-bottom:2px}
+  .steps .sd{font-size:14px; color:var(--ink-2)}
+  footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-3)}
+  @media (max-width:620px){
+    .wrap{padding:36px 18px 64px}
+    h1{font-size:25px}
+    .kv .row{grid-template-columns:1fr; gap:2px}
+    th,td{padding:9px 10px; font-size:13px}
+    table{display:block; overflow-x:auto; white-space:nowrap}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">零基础入门手册</p>
+  <h1>从零理解 AI：五个概念、一条路径、一个 GitHub</h1>
+  <p class="lead">这份手册写给不懂技术的人。不需要任何编程背景，读完你就能明白这些词到底在说什么，知道从哪里开始动手，也知道该避开哪些坑。</p>
+
+  <h2>一、先把五个词讲明白</h2>
+
+  <p>不用背定义，先记住一个小故事：</p>
+
+  <div class="story">
+    <p><strong>你想让 AI 帮你把一份乱七八糟的会议记录整理成待办清单。</strong></p>
+    <p>你用中文写下要求——这就是 <strong>Prompt（提示词）</strong>。<br>
+    真正读懂你这句话、并把待办清单写出来的那套程序，叫 <strong>LLM（大语言模型）</strong>。<br>
+    如果它不是装在你自己电脑上，而是跑在别人的服务器上，你的软件得通过一条"管道"去请它干活，这条管道叫 <strong>API</strong>。<br>
+    如果它不只是回答一次，而是能自己拆解步骤、去翻你的日历、查资料、改文件、反复尝试直到把事情做完——那它就是一个 <strong>Agent（智能体）</strong>。<br>
+    以上这一切加起来，统称为 <strong>AI（人工智能）</strong>。</p>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="head"><span class="name">AI</span><span class="full">Artificial Intelligence · 人工智能</span><span class="tag">最大的那个圈</span></div>
+      <p class="meta">它不是一个具体产品，而是<strong>一整个领域</strong>的统称：让机器表现出类似人类智能的所有技术。语音识别、人脸识别、推荐算法、自动驾驶、大语言模型，都装在"AI"这个筐里。</p>
+      <p class="meta">打个比方：AI 相当于"<b>交通工具</b>"——汽车、火车、飞机都属于它，但它本身不是某一辆车。</p>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="name">LLM</span><span class="full">Large Language Model · 大语言模型</span><span class="tag b">发动机</span></div>
+      <p class="meta">AI 里目前最主流的一类<strong>引擎</strong>。它被喂了海量文字（书、网页、代码）训练出来，核心能力其实是——<strong>预测下一个词该是什么</strong>。听起来简单，但把这件事做到极致，它就学会了写作、翻译、总结、推理、写代码。</p>
+      <p class="meta">ChatGPT、Claude、Gemini、DeepSeek、混元，这些名字背后都是 LLM。<br>它<strong>不知道今天发生了什么</strong>（有知识截止时间），也<strong>会一本正经地胡说</strong>（幻觉）。这两点是初学者最需要先建立的心理预期。</p>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="name">Prompt</span><span class="full">提示词</span><span class="tag b">方向盘</span></div>
+      <p class="meta">你写给 AI 的那段话，就是 Prompt。它<strong>不是编程</strong>，就是用大白话把你的需求说清楚。<strong>它直接决定了输出质量的高低</strong>——同一个模型，问法不同，结果能差出十倍。</p>
+      <p class="meta">一个够用的 Prompt 公式：<b>背景</b>（我是谁、什么场景）+ <b>任务</b>（要你做什么）+ <b>要求</b>（格式、字数、语气）+ <b>示例</b>（照这个来）。</p>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="name">API</span><span class="full">Application Programming Interface · 应用程序接口</span><span class="tag b">输油管</span></div>
+      <p class="meta">让<strong>程序</strong>（而不是人）去调用 AI 的那条通道。你在网页上打字提问，是"人在用"；而你写的脚本、用的软件要自动调用 AI，就得走 API。</p>
+      <p class="meta">它有两个现实含义：一是<strong>要花钱</strong>（按用量计费，单位叫 token）；二是<strong>要有钥匙</strong>（一串叫 API Key 的密钥，泄露了别人就能拿你的钱去用）。</p>
+    </div>
+
+    <div class="card">
+      <div class="head"><span class="name">Agent</span><span class="full">智能体</span><span class="tag">会自己干活的员工</span></div>
+      <p class="meta">把 LLM 从"一问一答的聊天框"升级成"给它一个目标，它自己去完成"的形态。它会<strong>自己拆解任务 → 调用工具（搜索、读写文件、操作软件）→ 检查结果 → 不对就重来 → 直到做完</strong>。</p>
+      <p class="meta">组成公式：<b>Agent = LLM（大脑）+ Prompt（目标）+ 工具与 API（手脚）+ 记忆 + 循环</b>。</p>
+    </div>
+
+  </div>
+
+  <h3>它们之间的关系，一句话记住</h3>
+
+  <div class="kv">
+    <div class="row"><div class="k">AI</div><div class="v">整个领域，最大的圈</div></div>
+    <div class="row"><div class="k">LLM</div><div class="v">AI 里的引擎，负责理解和生成</div></div>
+    <div class="row"><div class="k">Prompt</div><div class="v">你控制引擎的方向盘</div></div>
+    <div class="row"><div class="k">API</div><div class="v">让程序也能用上引擎的管道</div></div>
+    <div class="row"><div class="k">Agent</div><div class="v">引擎 + 方向盘 + 管道 + 手脚，组成一个会自己开车的司机</div></div>
+  </div>
+
+  <p><strong>关键理解：</strong>AI 是领域，LLM 是引擎，Prompt 是方向盘，API 是油管，Agent 是会自己开车的司机。它们不是并列的五样东西，而是<strong>层层叠起来的</strong>——下层是上层的原料。</p>
+
+  <h2>二、实际中是怎么用的</h2>
+
+  <table>
+    <thead><tr><th>层次</th><th>你在做什么</th><th>用到哪些概念</th></tr></thead>
+    <tbody>
+      <tr><td><strong>日常使用<br>（人人可用）</strong></td><td>聊天问答、写邮件、润色文章、翻译、总结长文档、让它解释看不懂的条款、让它帮你写 Excel 公式</td><td>只用 Prompt + LLM，打开网页就能用，不需要懂任何技术</td></tr>
+      <tr><td><strong>进阶使用<br>（会用工具）</strong></td><td>上传一份 PDF 或 Excel 让它分析；让它联网查最新资料；把重复的事情交给它定时去做；用它生成一个小网页</td><td>Prompt + LLM + 工具能力，本质还是"网页上操作"</td></tr>
+      <tr><td><strong>开发/自动化<br>（需要一点技术）</strong></td><td>写脚本批量处理文件、做一个自己的小工具、接进公司系统、搭建自动跑流程的 Agent</td><td>要接触 API（Key、计费）和代码，通常配合 GitHub 管理</td></tr>
+    </tbody>
+  </table>
+
+  <h3>必须知道的一个词：token</h3>
+  <p>AI 的"计费单位"和"记忆容量单位"。它不按字数算，按 token 算——大致上<strong>一个汉字约 1～2 个 token，一个英文单词约 1 个</strong>。每轮对话它"能记住"的内容有上限，这叫<strong>上下文长度</strong>。这解释了两个常见现象：聊得特别长之后它开始忘事；以及同样的问题，描述越啰嗦越贵。</p>
+
+  <h2>三、零基础可以从哪些场景入手</h2>
+
+  <p>原则是：<strong>不要从学原理开始，要从"用得上"开始</strong>。找一件你每周都要重复做、又烦又耗时的事，那就是你的切入点。</p>
+
+  <table>
+    <thead><tr><th>切入点</th><th>具体怎么做</th><th>为什么适合零基础</th></tr></thead>
+    <tbody>
+      <tr><td><strong>1. 当私人老师</strong></td><td>看不懂的合同条款、体检报告术语、报错信息，直接问它"用初中生能听懂的话解释这段话"</td><td>零门槛、立刻见效，同时练出提问能力</td></tr>
+      <tr><td><strong>2. 写作与改写</strong></td><td>写完的通知、邮件、总结，让它改得更简洁或更正式；或先口述要点让它成文</td><td>马上能用在工作和生活里</td></tr>
+      <tr><td><strong>3. 读长文档</strong></td><td>把几十页的 PDF 传上去，要它"列出关键结论和需要我决策的事项"</td><td>体会 AI 处理信息的效率，远超自己读</td></tr>
+      <tr><td><strong>4. 表格与数据</strong></td><td>不知道怎么写公式、怎么去重、怎么做透视表，把需求说清楚让它给公式并解释</td><td>解决办公里最实际的痛点</td></tr>
+      <tr><td><strong>5. 做个小东西</strong></td><td>让它给你生成一个简单的网页、计算器、抽签工具，直接保存成文件就能用</td><td>第一次接触到"代码"，但不用自己写</td></tr>
+      <tr><td><strong>6. 自动化重复操作</strong></td><td>让 AI 定时帮你抓取信息、整理文件、汇总日报</td><td>从这里开始，你自然就会想了解 API 和 Agent</td></tr>
+    </tbody>
+  </table>
+
+  <h2>四、学习的先后步骤</h2>
+
+  <ol class="steps">
+    <li>
+      <span class="st">第一级：会提问（先成为"提问高手"）</span>
+      <span class="sd">只练一件事——把话说清楚。学会给背景、给要求、给格式、给示例，学会在它答偏之后追加纠正，而不是重新问一遍。这一级不需要任何技术。</span>
+    </li>
+    <li>
+      <span class="st">第二级：定场景（把 AI 接进你的真实生活）</span>
+      <span class="sd">选 2～3 件你每周必做的事，反复用 AI 去做，把有效的问法记下来，形成自己的"提示词模板库"。这一步会让 AI 从"玩具"变成"工具"。</span>
+    </li>
+    <li>
+      <span class="st">第三级：懂边界（知道它什么时候不可靠）</span>
+      <span class="sd">建立三个认知：它会幻觉（编造事实和引用）、它有知识截止（不知道最新消息）、它不擅长精确计算和长链条推理。学会对关键数字、法条、引用做交叉验证。</span>
+    </li>
+    <li>
+      <span class="st">第四级：会用工具（从"聊天"走向"干活"）</span>
+      <span class="sd">开始用带文件上传、联网搜索、能操作电脑/软件的 AI 工具。理解什么是"给 AI 一个目标，它自己分步骤完成"——也就是 Agent 的雏形。</span>
+    </li>
+    <li>
+      <span class="st">第五级：接 API（真正的分水岭）</span>
+      <span class="sd">了解 API Key、计费方式、调用限制；哪怕不写代码，也能用现成的自动化平台搭一个流程。到这里你就从"用户"变成了"构建者"。</span>
+    </li>
+    <li>
+      <span class="st">第六级：进阶（想深入再加）</span>
+      <span class="sd">学一点 Python，学会调用 API，学会用 Git 和 GitHub 管理你的代码与提示词。这时候你才真正需要"系统学 AI"，而前面的用法经验会让这一步顺畅得多。</span>
+    </li>
+  </ol>
+
+  <div class="callout ok">
+    <p class="t">路径的核心逻辑</p>
+    <p>先<strong>用</strong>，再<strong>懂</strong>，最后才<strong>造</strong>。绝大多数人卡住，是因为一上来就去啃"神经网络""Transformer"这类原理，结果三个月过去还是不会用。反过来，先用熟了，原理会变得好懂很多。</p>
+  </div>
+
+  <h2>五、GitHub 能帮你什么</h2>
+
+  <p>先说结论：<strong>GitHub 是一个给"文件"用的云端保管箱 + 时间机器 + 协作平台。</strong>它免费，只需要注册一个账号。</p>
+
+  <h3>对你日常用电脑的帮助</h3>
+  <table>
+    <thead><tr><th>它能解决什么</th><th>说人话</th></tr></thead>
+    <tbody>
+      <tr><td><strong>文件有后悔药</strong></td><td>每次改动都留档，能看"哪天改了哪一行、为什么改"，能退回到任意一天的状态。彻底告别 <code>方案_v3_最终版_真的最终.docx</code></td></tr>
+      <tr><td><strong>换电脑不丢东西</strong></td><td>东西存在云端，新电脑上一条命令就全部取回来</td></tr>
+      <tr><td><strong>免费拿到别人的工具</strong></td><td>海量开源软件、AI 工具、脚本都在上面，而且能看到说明（README）和别人的使用经验。很多软件的官网下载，源头就是 GitHub</td></tr>
+      <tr><td><strong>遇到问题能找到答案</strong></td><td>Issues 区就是"别人的提问 + 作者的回答"。你遇到的报错，99% 已经有人问过并解决了</td></tr>
+      <tr><td><strong>判断一个软件值不值得用</strong></td><td>看它的最近更新时间、star 数量、issue 回复速度——就能知道它是在活跃维护，还是已经被废弃</td></tr>
+    </tbody>
+  </table>
+
+  <h3>对你学 AI 的帮助</h3>
+  <ul>
+    <li><strong>AI 生态几乎都从这里开始。</strong>模型、教程、课程、示例代码、提示词合集、各种 AI 工具，第一发布地往往就是 GitHub。</li>
+    <li><strong>试用新 AI 工具的标准动作就是 GitHub。</strong>看到有人推荐一个 AI 工具，通常的路径是：从 GitHub 下载 → 按 README 装好 → 运行。不会 GitHub，你连门都进不去。</li>
+    <li><strong>它是你存放学习成果的地方。</strong>建一个仓库当个人知识库，把笔记、提示词模板、练习代码都放进去，随时能看到自己一年来的进步。</li>
+    <li><strong>它是和 AI 编程助手配合的接口。</strong>现在很多 AI 编程助手（Copilot、Claude Code 等）是直接读取你的 GitHub 仓库来工作的。你的项目结构越清楚、README 写得越好，AI 帮你干活就越准。</li>
+    <li><strong>参与开源是最好的实战。</strong>给一个 AI 项目改进文档、提一个 issue、交一个很小的修改，就是零基础最合适的第一次实战。</li>
+    <li><strong>你的贡献记录是公开、可验证的。</strong>将来找工作时，这比自我介绍有说服力得多。</li>
+  </ul>
+
+  <h3>把 GitHub 和前面那五个概念连起来</h3>
+  <table>
+    <thead><tr><th>AI 概念</th><th>GitHub 在其中的角色</th></tr></thead>
+    <tbody>
+      <tr><td><strong>LLM</strong></td><td>模型本身的代码、训练方法、微调方案、使用文档都托管在这里。你想弄清一个模型怎么用、有什么限制，第一站就是它的仓库</td></tr>
+      <tr><td><strong>Prompt</strong></td><td>大量"提示词合集"仓库就是现成的模板库，可以直接抄。更重要的是：<strong>你可以把自己的提示词存进仓库做版本管理</strong>——哪句改了、为什么改、改完效果变好还是变差，全都有记录</td></tr>
+      <tr><td><strong>API</strong></td><td>官方仓库里的 README 和 <code>examples</code> 目录，就是"怎么写代码调用这个 AI"的标准教程。Learn API，从读仓库开始最快</td></tr>
+      <tr><td><strong>Agent</strong></td><td>各种智能体框架、插件、自动化工具本身就是 GitHub 上的开源项目，而且典型的使用方式就是"下载下来跑起来"。这是 GitHub 和 AI 结合最紧的地方</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <p class="t">反过来也成立</p>
+    <p>AI 也能帮你用 GitHub。<strong>你不懂命令没关系</strong>——报错贴给 AI 让它解释，README 让它帮你写，复杂的 git 操作让它给你现成命令。以后你甚至可以让 AI 智能体直接帮你在仓库里干活。<br>
+    这就是最好的闭环：<strong>GitHub 存放你的提示词、代码和学习笔记，AI 则读取这些东西来帮你干活。</strong></p>
+  </div>
+
+  <h2>六、避坑清单</h2>
+
+  <div class="callout danger">
+    <p class="t">这三件事千万不要做</p>
+    <ul>
+      <li><strong>不要把密码、身份证、银行卡、公司内部资料传给 AI。</strong>对话内容可能被保存，也可能在平台侧被查看。要处理的敏感信息，先手动去掉关键字段</li>
+      <li><strong>不要让 AI 直接替你做不可逆的操作。</strong>转账、删文件、群发邮件、提交正式材料——它可以帮你起草和检查，但最后一步必须你自己确认</li>
+      <li><strong>不要把 API Key 发到任何公开的地方</strong>（包括贴进公开仓库、群聊、截图）。一旦泄露，别人会用你的钱。如果不小心传了，立刻去平台吊销</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <p class="t">这四个误区很常见</p>
+    <ul>
+      <li><strong>以为 AI 说的都是对的。</strong>它对数字、法条、论文引用、历史细节的错误率不低。凡是要用来做决定的，务必核对原始来源</li>
+      <li><strong>指望一句话问到完美答案。</strong>正确姿势是多轮对话：先让它给个初稿，再逐步修正。迭代才是常态</li>
+      <li><strong>一上来就学原理。</strong>先会用，再懂原理——顺序反了最容易半途而废</li>
+      <li><strong>问得太笼统。</strong>"帮我写个方案"和"我是物业公司行政，要给业主写一份电梯检修停用通知，200 字以内，语气正式但不生硬"，结果完全不同</li>
+    </ul>
+  </div>
+
+  <footer>
+    AI 入门手册 · 零基础版 &nbsp;|&nbsp; 建议先照着"第一级：会提问"动手一周，再回来看这份路径。<br>
+    遇到任何一步卡住，把报错或疑问原样贴出来问，比重新学一遍更快。
+  </footer>
+
+</div>
+</body>
+</html>

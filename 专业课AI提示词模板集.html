@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>专业课 AI 提示词模板集</title>
+<style>
+  :root{
+    --bg:#F7F7F5; --card:#FFFFFF; --line:#E3E1DA;
+    --ink:#23231F; --ink-2:#5F5E5A; --ink-3:#888780;
+    --blue:#185FA5; --blue-bg:#E6F1FB; --blue-deep:#042C53;
+    --teal:#0F6E56; --teal-bg:#E1F5EE;
+    --amber:#854F0B; --amber-bg:#FAEEDA;
+    --red:#A32D2D; --red-bg:#FCEBEB;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.8; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:52px 26px 96px}
+  .kicker{font-size:13px; letter-spacing:.08em; color:var(--ink-3); margin:0 0 8px}
+  h1{font-size:30px; line-height:1.32; margin:0 0 14px; font-weight:700; letter-spacing:-.01em}
+  .lead{font-size:15.5px; color:var(--ink-2); margin:0 0 26px}
+  h2{font-size:20px; font-weight:600; margin:52px 0 6px; padding-left:14px;
+     border-left:4px solid var(--blue); line-height:1.4}
+  .gdesc{font-size:14px; color:var(--ink-3); margin:0 0 20px; padding-left:18px}
+  .rules{background:var(--blue-bg); border:1px solid #C3DCF5; border-radius:14px; padding:20px 24px; margin:0 0 8px}
+  .rules ol{margin:0; padding-left:20px}
+  .rules li{margin:7px 0; font-size:14.5px; color:var(--blue-deep)}
+  .rules b{font-weight:600}
+  .nav{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 4px; padding:0; list-style:none}
+  .nav a{
+    display:inline-block; font-size:13px; text-decoration:none; color:var(--blue);
+    background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 14px;
+  }
+  .nav a:hover{border-color:var(--blue); background:var(--blue-bg)}
+  .tpl{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 20px 14px; margin:0 0 16px}
+  .tpl-head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+  .tpl-head h4{margin:0; font-size:16px; font-weight:600}
+  .when{font-size:12px; color:var(--teal); background:var(--teal-bg); border-radius:999px; padding:2px 10px}
+  .body{position:relative}
+  .copy{
+    position:absolute; top:8px; right:8px; z-index:2;
+    font:inherit; font-size:12.5px; padding:3px 12px; cursor:pointer;
+    color:var(--blue); background:#FFFFFF; border:1px solid #C3DCF5; border-radius:999px;
+  }
+  .copy:hover{background:var(--blue-bg)}
+  pre{
+    margin:0; padding:16px 18px; overflow-x:auto;
+    background:#F4F3EF; border:1px solid #E8E6DF; border-radius:10px;
+    font-family:ui-monospace,"SFMono-Regular",Consolas,"Microsoft YaHei",monospace;
+    font-size:13px; line-height:1.75; color:#2E2E2A; white-space:pre-wrap; word-break:break-word;
+  }
+  pre b{color:var(--blue-deep); font-weight:600}
+  .tip{font-size:13.5px; color:var(--ink-2); margin:10px 0 0; padding-left:2px}
+  .tip::before{content:"提示 · "; color:var(--amber); font-weight:600}
+  .warn{background:var(--red-bg); border:1px solid #EFC2C2; border-radius:14px; padding:18px 22px; margin:22px 0 0}
+  .warn .t{font-weight:600; margin:0 0 8px; color:#501313; font-size:15px}
+  .warn ul{margin:0; padding-left:20px}
+  .warn li{font-size:14px; margin:6px 0; color:#712B13}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:13px; color:var(--ink-3)}
+  @media (max-width:620px){
+    .wrap{padding:34px 16px 64px}
+    h1{font-size:24px}
+    pre{font-size:12.5px; padding:14px}
+    .copy{position:static; display:block; margin:0 0 8px auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">航天专业大二 · 专业课专用</p>
+  <h1>专业课 AI 提示词模板集</h1>
+  <p class="lead">共 18 个模板，分 6 组。每个模板都可以直接整段复制，只需把【】里的内容换成你自己的。左上角「复制」按钮点一下即可。</p>
+
+  <div class="rules">
+    <p style="margin:0 0 10px;font-weight:600;color:#042C53">五条使用铁律，先看这个</p>
+    <ol>
+      <li><b>说具体。</b>「这段看不懂」改成「我从第 3 步开始不懂」，效果差十倍。</li>
+      <li><b>分轮次问。</b>一次只解决一个问题，别一口气问十件事。</li>
+      <li><b>加一句「先别给答案」。</b>检查类和出题类模板里都有这句，别删。</li>
+      <li><b>结果自己验。</b>量纲 + 数量级，两步走。AI 会算错，代码不会。</li>
+      <li><b>让它说「不确定」。</b>它的默认毛病是把编的东西说得同样自信。</li>
+    </ol>
+  </div>
+
+  <ul class="nav">
+    <li><a href="#g1">A 看不懂的时候</a></li>
+    <li><a href="#g2">B 想练会它</a></li>
+    <li><a href="#g3">C 做完之后</a></li>
+    <li><a href="#g4">D 计算与绘图</a></li>
+    <li><a href="#g5">E 复习与考试</a></li>
+    <li><a href="#g6">F 万能底座</a></li>
+  </ul>
+
+  <h2 id="g1">A 组 · 看不懂的时候（拆解类）</h2>
+  <p class="gdesc">适用于：教材推导看不懂、概念听着耳熟但说不清楚、总觉得公式是凭空冒出来的。</p>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>A1 · 逐步拆解推导</h4><span class="when">教材某段推导卡住了</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我是航天专业大二学生，正在学【课程名】。
+
+下面这段推导，我从第【N】步开始看不懂：
+
+【粘贴原文，或手打公式】
+
+请这样帮我：
+1. 先用一句话说清这段推导的起点和目标（从什么推到什么）。
+2. 从第 1 步开始，每一步都标注：依据的是哪个定律、公式或数学恒等式。
+3. 在我卡住的那一步停下来，专门解释「为什么可以这么代换或化简」，用最直白的话。
+4. 最后用一句话总结这段推导的核心思想。
+
+注意：如果中间有哪一步你认为原文有笔误、或者漏了条件，请直接指出来，不要顺着原文硬推下去。</pre>
+    </div>
+    <p class="tip">把「第 N 步」说具体，是最省时间的一件事。最后那句「不要硬推」很重要——教材确实会有笔误。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>A2 · 三层降维解释</h4><span class="when">概念说不清楚时</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>请用三种不同的深度解释【概念名】：
+
+1. 讲给一个完全没学过物理的人听——用生活里能见到的现象打比方。
+2. 讲给一个刚学完前置课程的大学生听——可以用数学，但每个符号都要说明物理含义。
+3. 讲给一个正在做这个方向的工程师听——用专业术语，直接点出关键难点和常见误区。
+
+每一层控制在 200 字以内，三层之间不要重复。</pre>
+    </div>
+    <p class="tip">第 3 层常常最有价值：它会告诉你课本没说、但实际做题会踩的坑。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>A3 · 找出我的前置知识缺口</h4><span class="when">怎么学都觉得不顺</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我在学【课程名】里的【章节或概念】，但总是理解不顺。
+
+请先判断：掌握这个内容，需要哪些前置知识？按依赖顺序列出来，从最底层的数学和物理开始。
+
+然后给每一项打一个标记：
+- 大一就该掌握的，标「基础」
+- 本课程新引入的，标「新知」
+- 学生最容易欠账的，标「高风险」
+
+最后，针对每一个「高风险」项，给我一段 10 分钟能看完的最小知识点说明。</pre>
+    </div>
+    <p class="tip">大部分「学不会」其实是前面某个知识点欠了账。这个模板专门用来查欠账。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>A4 · 找到公式的失效边界</h4><span class="when">想把「会套公式」变成「真懂」</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>关于【公式或结论名】，请回答：
+
+1. 它的完整推导前提是什么？逐条列出每一个假设。
+2. 去掉其中任意一个假设，结论会怎么变？
+3. 给我一个具体的物理场景，说明在这个场景下这个公式会给出明显错误的结果。要带具体数值。
+4. 工程上通常怎么处理这种失效情况？
+
+不要泛泛而谈，第 3 条一定要给出可计算的具体例子。</pre>
+    </div>
+    <p class="tip">能让 AI 举出带数值的反例，说明它真的在按物理推，而不是在背话术。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>A5 · 从物理直觉到数学公式</h4><span class="when">公式记得住但没画面感</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>请先用纯文字的物理直觉描述【现象或概念】是怎么回事——这一段里不要出现任何公式，只告诉我「为什么会这样」。
+
+然后再引入数学，逐项说明公式里的每一项分别对应刚才直觉描述里的哪个部分。
+
+最后反过来讲：如果我只是死记这个公式，会错过哪些物理图像上的关键点？</pre>
+    </div>
+    <p class="tip">顺序是「先画面、再符号」，和考场上先看物理再选公式的思路一致。</p>
+  </article>
+
+  <h2 id="g2">B 组 · 想练会它（出题类）</h2>
+  <p class="gdesc">适用于：知识点看懂了，但一考就不会。这一组的关键是——永远让它先不给答案。</p>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>B1 · 分层出题</h4><span class="when">学完一个知识点后巩固</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我学完了【知识点】。
+
+请出 5 道题，按难度分三档：
+- 第 1、2 题：直接套用公式，验证我记住没有。
+- 第 3、4 题：需要一个中间步骤或一次转化。
+- 第 5 题：需要综合两个以上知识点。
+
+重要：只给题目，不要给答案，也不要给提示。等我把答案发给你之后再批改。
+
+另外，每道题后面单独写一行，说明这道题想考察什么。这样我能对照自己的错因。</pre>
+    </div>
+    <p class="tip">「每道题想考察什么」这一句，会让你从「刷题」升级到「诊断自己」。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>B2 · 苏格拉底式引导（不给答案）</h4><span class="when">完全没思路，但不想被喂答案</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>这道题我做不出来：
+
+【粘贴题目】
+
+请不要告诉我答案。请你每次只问我一个问题，一步步引导我自己想出来。一次只问一个，等我回答之后再问下一个。
+
+如果我连续两次答错，你可以给一点方向性的提示，但依然不要给最终答案。</pre>
+    </div>
+    <p class="tip">这是「把 AI 当陪练」最纯正的用法。慢，但学会的东西忘不掉。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>B3 · 变式训练</h4><span class="when">做对了但不确定是否真会</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>这是我刚做对的一道题：
+
+【粘贴题目和我的解法】
+
+请基于同一个知识点，给我 4 道变式题：
+1. 只改变数值的——检验我的计算能力。
+2. 把已知和未知调换的——检验我能不能反推。
+3. 增加一个约束条件的——检验我对边界的理解。
+4. 换到另一个物理系统、但数学结构相同的——检验我能不能迁移。
+
+依然：先只给题目，我做完再对答案。</pre>
+    </div>
+    <p class="tip">第 4 题是精华。航天里的很多方程和别的领域数学同构，迁移能力比刷题量重要。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>B4 · 模拟口试（答辩拷问）</h4><span class="when">期末口试、答辩、组会汇报前</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>你是一位严格的专业课老师，我是学生。我们要做一次 10 分钟的口头问答，主题是【知识点】。
+
+规则：
+- 你一次只问一个问题。
+- 我回答之后，你指出我表述中不严谨的地方，然后继续追问。
+- 如果我的回答有原则性错误，直接指出来，不用客气。
+- 如果我说「卡住了」，你可以给一点提示，然后继续追问。
+- 一共问 6 个问题。最后给我一个总体评价：哪些概念我其实并没有真正掌握。
+
+现在开始问第一个问题。</pre>
+    </div>
+    <p class="tip">口试和笔试的区别是「说不出来就等于不会」。这个模板逼你把理解讲出口。</p>
+  </article>
+
+  <h2 id="g3">C 组 · 做完之后（检查类）</h2>
+  <p class="gdesc">适用于：题做完了想确认对不对。这一组的共同点是——先别给正确答案，只告诉你错在哪。</p>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>C1 · 检查我的推导（首选）</h4><span class="when">做完一道难题后</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我是航天专业大二学生。下面是我自己做的推导，请帮我检查：
+
+【粘贴我的完整推导过程】
+
+请按这个顺序检查：
+1. 第一步到第二步有没有问题？每个等号两边是否真的相等？
+2. 有没有哪一步偷偷用了一个我没有声明的假设？
+3. 符号约定前后一致吗？有没有中途把矢量当成标量？
+4. 最终结果的量纲对不对？
+5. 结果的量级合不合理？给我一个数量级上的直觉判断。
+
+如果发现错误，先不要给我正确结果。只告诉我错在第几步、属于哪一类问题，让我自己改。改完我再发给你看。</pre>
+    </div>
+    <p class="tip">最后那两句是灵魂。它把「对答案」变成了一次真正的自我修正训练。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>C2 · 量纲与量级自检</h4><span class="when">拿到任何公式结果之后</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>请对我这个结果做一次严格的量纲分析。
+
+结果表达式：【粘贴表达式】
+各符号的含义和单位：【逐条列出】
+
+请：
+1. 写出每一项的量纲，检查整体是否量纲一致。
+2. 如果量纲不一致，指出是哪一项出了问题——先不要改，让我自己找。
+3. 取一组典型的工程数值代入，估算结果的数量级，并告诉我这个量级在物理上是否合理。</pre>
+    </div>
+    <p class="tip">这是 AI 最可靠的用法之一，几乎不会出错，而且比你快得多。强烈建议养成习惯。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>C3 · 红队审查（让它找我漏洞）</h4><span class="when">写报告、做课程设计、准备答辩</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我刚完成的结论是：
+
+【写出你的结论和理由】
+
+请你扮演一位挑剔的审稿人，专门找我的问题：
+1. 我的论证里有没有逻辑跳跃？
+2. 有没有我没考虑到的反例或特殊情形？
+3. 我的假设是不是太强了？能不能放宽？
+4. 如果这个结论最终是错的，最可能的原因是什么？
+
+请只指出问题，不要替我修正。我需要知道自己错在哪，而不是拿到一份别人写好的东西。</pre>
+    </div>
+    <p class="tip">「只指出问题，不要替我修正」这一句决定了它是在训练你还是在替代你。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>C4 · 按评分标准打分</h4><span class="when">想用考试标准检验自己</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>这是一道【分值】分的题目，以下是我的解答：
+
+【粘贴解答】
+
+请像阅卷老师一样：
+1. 先只给一个分数，并说明主要扣分点。
+2. 再逐处列出「能拿分」和「丢分」的具体位置。
+3. 最后告诉我：如果重做一次，最应该改变的一个做法是什么？</pre>
+    </div>
+    <p class="tip">考试丢分往往不是不会，而是「会但没拿全分」。这个模板专门治这个毛病。</p>
+  </article>
+
+  <h2 id="g4">D 组 · 计算与绘图（工具类）</h2>
+  <p class="gdesc">核心思路：符号计算和画图交给代码，不要让它心算。它会算错，代码不会。</p>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>D1 · 生成符号计算代码</h4><span class="when">要算积分、解微分方程、化简表达式</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>请帮我用 Python 的 SymPy 做这个符号计算。不要直接给我手算结果，我要代码。
+
+要计算的是：【描述要求】
+已知条件：【逐条列出】
+
+要求：
+1. 给完整可运行的代码，我在本地 Python 或 Jupyter 里跑。
+2. 每一行加中文注释，说明在做什么。
+3. 结尾打印最终结果，并单独做一次量纲检查（如果能做）。
+4. 代码下方说明：手工验证这个结果的最快方法是什么。</pre>
+    </div>
+    <p class="tip">如果你还没装 Python，让它顺便给你一段安装和运行的最短步骤说明。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>D2 · 画物理示意图与曲线</h4><span class="when">需要一个看得见的图</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>请帮我用 Python 的 matplotlib 画一张图：【描述要画什么，比如 势能曲线随距离的变化】。
+
+要求：
+1. 只用 matplotlib 自带能力，不要依赖额外字体或需要安装的库。
+2. 坐标轴必须标出物理量名称和单位。
+3. 在图上标注关键特征（极值点、渐近线、分界点），并说明它们的物理含义。
+4. 给完整代码，我要自己调参数。
+5. 代码下方解释：从这张图应该读出什么物理结论？</pre>
+    </div>
+    <p class="tip">第 5 条是重点。图不是拿来好看的，是要读出结论的。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>D3 · 实验数据处理</h4><span class="when">实验课、大物实验、课程设计</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我有一组实验数据需要处理：
+
+【粘贴数据，或描述数据的格式和量级】
+
+请：
+1. 推荐最合适的处理方法或拟合模型，并说明为什么选它。
+2. 给出完整的数据处理代码，包含误差分析。
+3. 告诉我：从这组数据里应该得出什么物理结论？怎么判断数据本身是否合理？
+4. 列出这类数据处理中最容易犯的一个错误，以及怎么避免。</pre>
+    </div>
+    <p class="tip">数据处理最容易糊弄过去，也最容易被老师一眼看出来。让 AI 帮你把误差分析做扎实。</p>
+  </article>
+
+  <h2 id="g5">E 组 · 复习与考试</h2>
+  <p class="gdesc">适用于：期中考前、章节复习、整理错题。</p>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>E1 · 一页纸知识框架</h4><span class="when">学期中或复习初期</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>请为【课程名】的【章节】整理一份知识框架。
+
+按这个格式：
+- 先用一句话说清这一章要解决的核心问题。
+- 列出核心概念，不超过 8 个。每个概念用一句话解释，并注明它依赖哪个前置概念。
+- 最后标出这一章里「最容易被考」和「最容易学错」的分别是哪几个点。
+
+不要写成长篇大论，我要的是能贴在桌前的一页纸。</pre>
+    </div>
+    <p class="tip">「最容易被考」和「最容易学错」这两栏，比整章总结有用得多。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>E2 · 考前速查表</h4><span class="when">考前一两天</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我要考【课程名】，请给我一份 A4 纸大小的速查表，包含：
+
+1. 必须记住的核心公式，每个都注明适用条件。
+2. 容易混淆的符号或概念对照。
+3. 常见题型的标准解法步骤，每种不超过 4 步。
+4. 最常见的三个错误。
+
+要求：极简。只保留考场上真正用得上的东西，不要解释、不要铺垫。</pre>
+    </div>
+    <p class="tip">生成后一定要自己核对公式——尤其是适用条件，AI 在这上面偶尔会串。</p>
+  </article>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>E3 · 错题归因（治本）</h4><span class="when">整理错题本的时候</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我这几道题做错了：
+
+【粘贴题目和我的错误解法】
+
+请不要只给正确答案，先做归因分析：
+1. 我的错误属于哪一类？（概念不清 / 公式记错 / 审题错误 / 计算失误 / 推导跳跃）
+2. 这几道题的错误有没有共同的根源？
+3. 如果这个根源是一个知识缺口，请告诉我该回去补哪个具体知识点。
+4. 然后出 2 道专门考这个薄弱点的题，先不给答案。</pre>
+    </div>
+    <p class="tip">错题本最没用的做法是抄正确答案。归因才是提分的地方。</p>
+  </article>
+
+  <h2 id="g6">F 组 · 万能底座</h2>
+  <p class="gdesc">每次提问都贴上这一段，效果比不贴好很多。花十秒，省半小时。</p>
+
+  <article class="tpl">
+    <div class="tpl-head"><h4>F1 · 通用背景前缀</h4><span class="when">任何提问都可以加</span></div>
+    <div class="body">
+      <button class="copy">复制</button>
+      <pre>我的背景：航天或宇航专业大二学生，已学过高等数学、线性代数、大学物理、【补充已学课程】，目前正在学【当前课程】。
+
+我这次的问题是：【问题】
+
+回答要求：
+- 用我学过的知识来解释，不要引入我还没学的概念；如果必须引入，先单独解释它。
+- 涉及推导时，写清每一步的依据。
+- 不确定的地方明确说「不确定」，不要编一个看起来合理的答案。
+- 最后给我一句话总结。</pre>
+    </div>
+    <p class="tip">把「已学课程」维护好，这是它判断讲不讲得深的唯一依据。</p>
+  </article>
+
+  <div class="warn">
+    <p class="t">三条不能碰的红线</p>
+    <ul>
+      <li><b>不要把 AI 的推导当成标准答案。</b>符号多、步骤多的时候它一定会出错，而且错得很自信。凡是要写进作业的，自己验一遍量纲和数量级。</li>
+      <li><b>不要让 AI 替代你做题。</b>用它讲思路、出题、检查，但手和脑必须是你自己的。专业课的底子是靠动手堆出来的，绕不过去。</li>
+      <li><b>不要上传不该上传的东西。</b>老师的内部课件、未公开的科研资料、含有他人信息的文件，都不要直接传。教材内容自己手打关键公式即可。</li>
+    </ul>
+  </div>
+
+  <footer>
+    专业课 AI 提示词模板集 · 共 18 个模板<br>
+    建议先只用 A1 和 C1 两个，用熟一周之后再逐步加别的。一次用 18 个模板等于没用。
+  </footer>
+
+</div>
+<script>
+document.addEventListener('click', function(e){
+  var btn = e.target.closest('.copy');
+  if(!btn) return;
+  var pre = btn.parentElement.querySelector('pre');
+  if(!pre) return;
+  var text = pre.innerText;
+  var ok = function(){ btn.textContent = '已复制'; setTimeout(function(){ btn.textContent = '复制'; }, 1500); };
+  var fallback = function(){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var done = false;
+    try { done = document.execCommand('copy'); } catch(err) { done = false; }
+    document.body.removeChild(ta);
+    if(done){ ok(); } else { btn.textContent = '请手动选中复制'; }
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(ok).catch(fallback);
+  } else {
+    fallback();
+  }
+});
+</script>
+</body>
+</html>
